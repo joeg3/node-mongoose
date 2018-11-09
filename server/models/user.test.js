@@ -3,26 +3,25 @@ const {mongoose} = require('../db/mongoose');
 const {ObjectID} = require('mongodb');
 const User = require('./user');
 
-var userOneId = new ObjectID();
-var userTwoId = new ObjectID();
-const users = [{
-  _id: userOneId,
-  name: 'Jim',
-  age: 22
-}, {
-  _id: userTwoId,
-  name: 'Patty',
-  age: 33
-}];
-
-// Before each test, delete all users from database
-beforeEach((done) => {
-  User.remove({}).then(() => {
-    return User.insertMany(users);
-  }).then(() => done());
-});
-
 describe('Basic db calls with User', () => {
+
+  var userOneId = new ObjectID();
+  var userTwoId = new ObjectID();
+  const users = [{
+    _id: userOneId,
+    name: 'Jim',
+    age: 22
+  }, {
+    _id: userTwoId,
+    name: 'Patty',
+    age: 33
+  }];
+
+  beforeEach((done) => {
+    User.deleteMany({}).then(() => {
+      return User.insertMany(users);
+    }).then(() => done());
+  });
 
   it('should create user', async () => {
     var id = new ObjectID();

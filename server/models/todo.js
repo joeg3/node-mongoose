@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-let Todo = mongoose.model('Todo', {
+let TodoSchema = new Schema({
   text: {
     type: String,
     required: true,
@@ -10,11 +11,7 @@ let Todo = mongoose.model('Todo', {
   completed: {
     type: Boolean,
     default: false
-  },
-  completedAt: {
-    type: Number, // A unix timestamp
-    default: null
   }
-});
+}, { collection: 'todos'});
 
-module.exports = {Todo};
+module.exports = mongoose.model('Todo', TodoSchema);
